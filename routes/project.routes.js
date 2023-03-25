@@ -6,7 +6,7 @@ const bcrypt = require("bcryptjs");
 router.get("/", (req, res, next) => {
     Project.find()
     .then(response => {
-        res.json({message : "llego el get"});
+        res.json({response});
     })
     .catch(err => next(err));
 });
