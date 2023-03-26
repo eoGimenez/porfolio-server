@@ -30,7 +30,7 @@ router.post("/new", (req, res, next) => {
     .then(response => {
         res.json({ response: "Created !"});
     })
-    .catch(err => next(err));
+    .catch(err => console.log("paso esto", err));
 });
 
 router.put("/:projId/edit", (req, res, next) => {
@@ -50,6 +50,7 @@ router.put("/:projId/edit", (req, res, next) => {
 router.delete("/:projId/delete", (req, res, next) => {
     const { projectId } = req.params;
     const { ownCode } = req.body;
+    console.log(req.params, req.body)
     if(!bcrypt.compareSync(ownCode, process.env.CRYPTCODE)) {
         res.json ({ error: "Your Owner Code is not correct" });
         return;
