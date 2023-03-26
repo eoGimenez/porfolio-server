@@ -4,7 +4,6 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser")
 
 
-
 module.exports = (app) => {
     //app.set("trust proxy", 1);
 

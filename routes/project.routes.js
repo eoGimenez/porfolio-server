@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const Project = require("../models/Projects.model");
-
+const fileUploader = require("../config/cloudinary.config")
 const bcrypt = require("bcryptjs");
 
 router.get("/", (req, res, next) => {
@@ -19,6 +19,14 @@ router.get("/:projId", (req, res, next) => {
     })
     .catch(err => next(err));
 });
+
+router.post("/upload", fileUploader.single("image"), (req, res, next) => {
+    if(!req.file){
+        next(new Error("No file selected"));
+        return;
+    }
+    res.json({ imageUrl: req.file.path })
+})
 
 router.post("/new", (req, res, next) => {
     const { title, description, technologies, url, image, ownCode } = req.body;
@@ -50,7 +58,6 @@ router.put("/:projId/edit", (req, res, next) => {
 router.delete("/:projId/delete", (req, res, next) => {
     const { projectId } = req.params;
     const { ownCode } = req.body;
-    console.log(req.params, req.body)
     if(!bcrypt.compareSync(ownCode, process.env.CRYPTCODE)) {
         res.json ({ error: "Your Owner Code is not correct" });
         return;
