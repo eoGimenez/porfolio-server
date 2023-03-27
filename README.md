@@ -1,3 +1,3 @@
-# porfolio-server
+# portfolio-server
 
 WORK ING PROGRESS
