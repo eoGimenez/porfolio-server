@@ -56,15 +56,15 @@ router.put("/:projId/edit", (req, res, next) => {
 });
 
 router.delete("/:projId/delete", (req, res, next) => {
-    const { projectId } = req.params;
+    const { projId } = req.params;
     const { ownCode } = req.body;
     if(!bcrypt.compareSync(ownCode, process.env.CRYPTCODE)) {
         res.json ({ error: "Your Owner Code is not correct" });
         return;
     };
-    Project.findOneAndDelete(projectId)
+    Project.findByIdAndDelete(projId)
     .then(result => {
-        res.json({ result: `Project ${result.title} was deleted`})
+        res.json({ message: `Project was deleted`})
     })
     .catch(err => next(err));
 });
