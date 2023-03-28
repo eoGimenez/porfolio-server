@@ -15,3 +15,8 @@ que sirve para autorizar los metodos POST/PUT/DELETE, la idea es evitar que exis
 - Clone 
 - Definir al .env la variable "CRYPTCODE", en esta variable tenes que asignarle el resultado en codigo Hash de tu palabra secreta,
 aca tenes un generador de codigo Hash para bryptjf : [here](https://bcrypt-generator.com/)
+
+
+## Modelo de Poryecto
+
+WORK IN PROGRESS
