@@ -10,10 +10,10 @@ router.get('/', (req, res, next) => {
 		})
 		.catch((err) => next(err));
 });
-//tengo que ver si voy a usar esta ruta, creo que desde front es mejor llamar al contecto cuando alguien entra directamente en una ID, de esa forma ya queda el contexto, pensarlo,...
+//esta ruta queda sin uso pero la dejo por posibles cambios futuros.
 router.get('/:projId', (req, res, next) => {
-	const { projectId } = req.params;
-	Project.findById(projectId)
+	const { projId } = req.params;
+	Project.findById(projId)
 		.then((result) => {
 			res.json(result);
 		})
