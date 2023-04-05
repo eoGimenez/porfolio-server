@@ -42,19 +42,19 @@ router.post('/new', (req, res, next) => {
 });
 
 router.put('/:projId/edit', (req, res, next) => {
-	const { projectId } = req.params;
+	const { projId } = req.params;
 	const { title, description, technologies, url, image, ownCode } = req.body;
 	if (!bcrypt.compareSync(ownCode, process.env.CRYPTCODE)) {
 		res.json({ error: 'Your Owner Code is not correct' });
 		return;
 	}
 	Project.findByIdAndUpdate(
-		projectId,
+		projId,
 		{ title, description, technologies, url, image },
-		{ new: trie }
+		{ new: true }
 	)
 		.then((result) => {
-			res.json(result);
+			res.json(result.data);
 		})
 		.catch((err) => next(err));
 });
