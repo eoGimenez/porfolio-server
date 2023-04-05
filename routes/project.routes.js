@@ -29,12 +29,12 @@ router.post('/upload', fileUploader.single('image'), (req, res, next) => {
 });
 
 router.post('/new', (req, res, next) => {
-	const { title, description, technologies, url, image, ownCode } = req.body;
+	const { title, description, technologies, urlGit, image, ownCode } = req.body;
 	if (!bcrypt.compareSync(ownCode, process.env.CRYPTCODE)) {
 		res.json({ error: 'Your Owner Code is not correct' });
 		return;
 	}
-	Project.create({ title, description, technologies, url, image })
+	Project.create({ title, description, technologies, urlGit, image })
 		.then((response) => {
 			res.json({ response: 'Created !' });
 		})
@@ -43,14 +43,14 @@ router.post('/new', (req, res, next) => {
 
 router.put('/:projId/edit', (req, res, next) => {
 	const { projId } = req.params;
-	const { title, description, technologies, url, image, ownCode } = req.body;
+	const { title, description, technologies, urlGit, image, ownCode } = req.body;
 	if (!bcrypt.compareSync(ownCode, process.env.CRYPTCODE)) {
 		res.json({ error: 'Your Owner Code is not correct' });
 		return;
 	}
 	Project.findByIdAndUpdate(
 		projId,
-		{ title, description, technologies, url, image },
+		{ title, description, technologies, urlGit, image },
 		{ new: true }
 	)
 		.then((result) => {
