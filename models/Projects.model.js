@@ -3,6 +3,7 @@ const { Schema, model } = require('mongoose');
 const projectSchema = new Schema({
 	title: String,
 	description: String,
+	secDescription: String,
 	technologies: [String],
 	urlGit: String,
 	image: String,

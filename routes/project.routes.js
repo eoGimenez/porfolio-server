@@ -10,7 +10,7 @@ router.get('/', (req, res, next) => {
 		})
 		.catch((err) => next(err));
 });
-//esta ruta queda sin uso pero la dejo por posibles cambios futuros.
+
 router.get('/:projId', (req, res, next) => {
 	const { projId } = req.params;
 	Project.findById(projId)
@@ -29,12 +29,12 @@ router.post('/upload', fileUploader.single('image'), (req, res, next) => {
 });
 
 router.post('/new', (req, res, next) => {
-	const { title, description, technologies, urlGit, image, ownCode } = req.body;
+	const { title, description, secDescription, technologies, urlGit, image, ownCode } = req.body;
 	if (!bcrypt.compareSync(ownCode, process.env.CRYPTCODE)) {
-		res.json({ error: 'Your Owner Code is not correct' });
+		res.json({ messageError: 'Your Owner Code is not correct !' });
 		return;
 	}
-	Project.create({ title, description, technologies, urlGit, image })
+	Project.create({ title, description, secDescription, technologies, urlGit, image })
 		.then((response) => {
 			res.json({ response: 'Created !' });
 		})
@@ -43,14 +43,14 @@ router.post('/new', (req, res, next) => {
 
 router.put('/:projId/edit', (req, res, next) => {
 	const { projId } = req.params;
-	const { title, description, technologies, urlGit, image, ownCode } = req.body;
+	const { title, description, secDescription, technologies, urlGit, image, ownCode } = req.body;
 	if (!bcrypt.compareSync(ownCode, process.env.CRYPTCODE)) {
-		res.json({ error: 'Your Owner Code is not correct' });
+		res.json({ messageError: 'Your Owner Code is not correct !' });
 		return;
 	}
 	Project.findByIdAndUpdate(
 		projId,
-		{ title, description, technologies, urlGit, image },
+		{ title, description, secDescription, technologies, urlGit, image },
 		{ new: true }
 	)
 		.then((result) => {
@@ -63,7 +63,7 @@ router.delete('/:projId/delete', (req, res, next) => {
 	const { projId } = req.params;
 	const { ownCode } = req.body;
 	if (!bcrypt.compareSync(ownCode, process.env.CRYPTCODE)) {
-		res.json({ error: 'Your Owner Code is not correct' });
+		res.json({ messageError: 'Your Owner Code is not correct' });
 		return;
 	}
 	Project.findByIdAndDelete(projId)
