@@ -3,6 +3,10 @@ const Project = require('../models/Projects.model');
 const fileUploader = require('../config/cloudinary.config');
 const bcrypt = require('bcryptjs');
 
+const CRYPTCODE = "$2a$10$xMtAv2fhVtwpz8nnpucvUO2lc/lR/b1dfWa6aem/Yz/gP5ZDMGXoW"
+//const CRYPTCODE = process.env.CRYPTCODE
+
+
 router.get('/', (req, res, next) => {
 	Project.find()
 		.then((response) => {
@@ -30,7 +34,7 @@ router.post('/upload', fileUploader.single('image'), (req, res, next) => {
 
 router.post('/new', (req, res, next) => {
 	const { title, description, secDescription, technologies, urlGit, image, ownCode } = req.body;
-	if (!bcrypt.compareSync(ownCode, process.env.CRYPTCODE)) {
+	if (!bcrypt.compareSync(ownCode, CRYPTCODE)) {
 		res.json({ messageError: 'Your Owner Code is not correct !' });
 		return;
 	}
@@ -44,7 +48,7 @@ router.post('/new', (req, res, next) => {
 router.put('/:projId/edit', (req, res, next) => {
 	const { projId } = req.params;
 	const { title, description, secDescription, technologies, urlGit, image, ownCode } = req.body;
-	if (!bcrypt.compareSync(ownCode, process.env.CRYPTCODE)) {
+	if (!bcrypt.compareSync(ownCode, CRYPTCODE)) {
 		res.json({ messageError: 'Your Owner Code is not correct !' });
 		return;
 	}
@@ -62,7 +66,7 @@ router.put('/:projId/edit', (req, res, next) => {
 router.delete('/:projId/delete', (req, res, next) => {
 	const { projId } = req.params;
 	const { ownCode } = req.body;
-	if (!bcrypt.compareSync(ownCode, process.env.CRYPTCODE)) {
+	if (!bcrypt.compareSync(ownCode, CRYPTCODE)) {
 		res.json({ messageError: 'Your Owner Code is not correct' });
 		return;
 	}
