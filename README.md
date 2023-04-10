@@ -17,11 +17,33 @@ que sirve para autorizar los metodos POST/PUT/DELETE, la idea es evitar que exis
 aca tenes un generador de codigo Hash para bryptjf : [here](https://bcrypt-generator.com/)
 
 
-## Modelo de Poryecto
+## Modelo
 
+```js
+const projectSchema = new Schema({
+	title: { type: String, required: true },
+	description: { type: String, required: true },
+	secDescription: { type: String, required: true },
+	technologies: [String],
+	urlGit: { type: String, required: true },
+	image: { type: String, required: true },
+	linkedIn: {
+		type: String,
+		default: 'https://www.linkedin.com/in/eogimenez/',
+	},
+});
+```
 
 ## End Points
 
+| Method | Endpoint | Require  | Response (200)  | Action  |
+| :----: | :--------------: | :-------------------: |:-----------------: | --------------------------- |
+| GET | / | none | res.json({ response }) | Devuelve la lista de los proyectos de la API. |
+| GET | /:projId | none | res.json(result) | Devuelve el proyecto con el id en el param. |
+| POST | /upload | const { file } = req.file | res.json({ imageUrl: req.file.path }) | Sube la imagen a la base de datos y devuelve el Url. |
+| POST | /new | const { title, description, secDescription, technologies, urlGit, image, ownCode } = req.body | res.status(201).json({ response: `Created !` }) | Crea en la API el nuevo proyecto con los datos proporcionados. | 
+| PUT | /:projId/edit | const { projId } = req.params & const { title, description, secDescription, technologies, urlGit, image, ownCode } = req.body | res.json(result.data) | Actualiza un proyecto de la API. |
+| DELETE | /:projId/delete | const { projId } = req.params & const { ownCode } = req.body | res.status(202).json({ message: `Project was deleted` }) | Remueve el proyecto con la ID proporcionada. 
 
-##
-WORK IN PROGRESS
+
+---
