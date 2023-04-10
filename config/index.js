@@ -5,11 +5,14 @@ const cookieParser = require("cookie-parser")
 
 
 module.exports = (app) => {
-    //app.set("trust proxy", 1);
+    app.set("trust proxy", 1);
+
+    const FRONTEND_URL = process.env.ORIGIN;
+    const FRONTEDN_LOCAL = process.env.ORIGIN_LOCAL
 
     app.use(cors ({
-        //credentials: true,
-        origin: '*'
+        credentials: true,
+        origin: [FRONTEND_URL, FRONTEDN_LOCAL]
     }))
     
     app.use(logger("dev"));
