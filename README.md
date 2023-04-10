@@ -15,6 +15,11 @@ El server funciona como una API para ser consumida en el Front, a parte del CORS
 - Definir variable "CRYPTCODE", en esta variable tienes que asignarle el resultado en codigo hash de tu palabra secreta,
 aquí tienes un generador de codigo hash para bryptjs : [here](https://bcrypt-generator.com/)
 
+```shell
+$ cd portfolio-client
+$ npm install
+$ npm run dev
+```
 
 ## Modelo
 
