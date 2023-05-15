@@ -61,7 +61,7 @@ router.post('/login', (req, res, next) => {
 				return;
 			}
 
-			const { email, userName } = result;
+			const { _id, email, userName } = result;
 			const payload = { _id, email, userName };
 			const authToken = jwt.sign(payload, process.env.TOKEN_SECRET, {
 				algorithm: 'HS256',

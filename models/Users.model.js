@@ -14,7 +14,7 @@ const userSchema = new Schema({
 		type: String,
 		required: [true, 'User name is required'],
 	},
-	projects: [{ type: Schema.Types.ObjectId, ref: 'Project' }],
+	// projects: [{ type: Schema.Types.ObjectId, ref: 'Project' }],
 });
 
 module.exports = model('User', userSchema);
