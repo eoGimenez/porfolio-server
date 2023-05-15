@@ -1,11 +1,11 @@
 const router = require('express').Router();
 const Project = require('../models/Projects.model');
 const fileUploader = require('../config/cloudinary.config');
-const bcrypt = require('bcryptjs');
+// const bcrypt = require('bcryptjs');
+const { isAuthenticated } = require('../middleware/jwt.middleware');
 
-const CRYPTCODE = "$2a$10$xMtAv2fhVtwpz8nnpucvUO2lc/lR/b1dfWa6aem/Yz/gP5ZDMGXoW"
+// const CRYPTCODE = '$2a$10$xMtAv2fhVtwpz8nnpucvUO2lc/lR/b1dfWa6aem/Yz/gP5ZDMGXoW';
 //const CRYPTCODE = process.env.CRYPTCODE
-
 
 router.get('/', (req, res, next) => {
 	Project.find()
@@ -32,26 +32,28 @@ router.post('/upload', fileUploader.single('image'), (req, res, next) => {
 	res.json({ imageUrl: req.file.path });
 });
 
-router.post('/new', (req, res, next) => {
-	const { title, description, secDescription, technologies, urlGit, image, ownCode } = req.body;
-	if (!bcrypt.compareSync(ownCode, CRYPTCODE)) {
-		res.status(403).json({ messageError: 'Your Owner Code is not correct !' });
-		return;
-	}
+router.post('/new', isAuthenticated, (req, res, next) => {
+	const { title, description, secDescription, technologies, urlGit, image /* ownCode */ } =
+		req.body;
+	// if (!bcrypt.compareSync(ownCode, CRYPTCODE)) {
+	// 	res.status(403).json({ messageError: 'Your Owner Code is not correct !' });
+	// 	return;
+	// }
 	Project.create({ title, description, secDescription, technologies, urlGit, image })
-		.then((response) => {
-			res.status(201).json({ response: 'Created !' });
+		.then((result) => {
+			res.status(201).json({ result: 'Created !' });
 		})
 		.catch((err) => console.log('paso esto', err));
 });
 
-router.put('/:projId/edit', (req, res, next) => {
+router.put('/:projId/edit', isAuthenticated, (req, res, next) => {
 	const { projId } = req.params;
-	const { title, description, secDescription, technologies, urlGit, image, ownCode } = req.body;
-	if (!bcrypt.compareSync(ownCode, CRYPTCODE)) {
-		res.status(403).json({ messageError: 'Your Owner Code is not correct !' });
-		return;
-	}
+	const { title, description, secDescription, technologies, urlGit, image /* ownCode */ } =
+		req.body;
+	// if (!bcrypt.compareSync(ownCode, CRYPTCODE)) {
+	// 	res.status(403).json({ messageError: 'Your Owner Code is not correct !' });
+	// 	return;
+	// }
 	Project.findByIdAndUpdate(
 		projId,
 		{ title, description, secDescription, technologies, urlGit, image },
@@ -63,13 +65,13 @@ router.put('/:projId/edit', (req, res, next) => {
 		.catch((err) => next(err));
 });
 
-router.delete('/:projId/delete', (req, res, next) => {
+router.delete('/:projId/delete', isAuthenticated, (req, res, next) => {
 	const { projId } = req.params;
-	const { ownCode } = req.body;
-	if (!bcrypt.compareSync(ownCode, CRYPTCODE)) {
-		res.status(403).json({ messageError: 'Your Owner Code is not correct' });
-		return;
-	}
+	// const { ownCode } = req.body;
+	// if (!bcrypt.compareSync(ownCode, CRYPTCODE)) {
+	// 	res.status(403).json({ messageError: 'Your Owner Code is not correct' });
+	// 	return;
+	// }
 	Project.findByIdAndDelete(projId)
 		.then((result) => {
 			res.status(202).json({ message: `Project was deleted` });
