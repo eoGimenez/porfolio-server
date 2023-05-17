@@ -14,6 +14,7 @@ const userSchema = new Schema({
 		type: String,
 		required: [true, 'User name is required'],
 	},
+	// Evaluar la posibilidad de sumarle la relacion de los proyectos
 	// projects: [{ type: Schema.Types.ObjectId, ref: 'Project' }],
 });
 
