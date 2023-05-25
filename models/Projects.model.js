@@ -6,8 +6,8 @@ const projectSchema = new Schema({
 	secDescription: { type: String, required: true },
 	technologies: [{ type: String, required: true }],
 	urlGit: { type: String, required: true },
-	image: { type: String, required: true },
-	// pensar en agregar el "author" al modelo de project
+	image: [{ type: String, required: true }],
+	author: { type: Schema.Types.ObjectId, ref: 'User' },
 });
 
 module.exports = model('Project', projectSchema);

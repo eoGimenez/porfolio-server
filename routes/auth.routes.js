@@ -52,12 +52,12 @@ router.post('/login', (req, res, next) => {
 	User.findOne({ email })
 		.then((result) => {
 			if (!result) {
-				res.status(401).json({ messageError: 'Wrong credentials, please, check them.' });
+				res.status(401).json({ messageError: 'Wrong credentials, please, check them. Sin resultado' });
 				return;
 			}
 
 			if (!bcrypt.compareSync(password, result.password)) {
-				res.status(401).json({ messageError: 'Wrong credentials, please, check them.' });
+				res.status(401).json({ messageError: 'Wrong credentials, please, check them. Bad pass' });
 				return;
 			}
 
