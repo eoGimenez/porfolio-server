@@ -50,7 +50,6 @@ router.post('/', isAuthenticated, (req, res, next) => {
 	// }
 	Project.create({ title, description, secDescription, technologies, urlGit, image, author })
 		.then((result) => {
-			console.log(result);
 			return User.findByIdAndUpdate(author, { $push: { projects: result._id } });
 		})
 		.then((result) => {
@@ -73,7 +72,7 @@ router.put('/:projId', isAuthenticated, (req, res, next) => {
 		{ new: true }
 	)
 		.then((result) => {
-			res.status(200).json({result});
+			res.status(200).json({ result });
 		})
 		.catch((err) => next(err));
 });
@@ -86,6 +85,9 @@ router.delete('/:projId', isAuthenticated, (req, res, next) => {
 	// 	return;
 	// }
 	Project.findByIdAndDelete(projId)
+		.then((result) => {
+			return User.findByIdAndUpdate(result.author, { $pull: { projects: result._id } });
+		})
 		.then((result) => {
 			res.status(202).json({ message: `Project was deleted` });
 		})
