@@ -80,6 +80,6 @@ auth.router.js
 | Método | Endpoint | Require  | Response (200)  | Action  |
 | :----: | :--------------: | :-------------------: |:-----------------: | --------------------------- |
 | POST | /signup | const { email, password, passwordRe, userName, ownCode } = req.body; | res.status(201).json({ user: user }); | Registra un nuevo usuario en la DB. |
-| POST | /login | const {email, password } = req.body; | res.status(200).json({ authToken }); | Devuelve el JWT al cliente |
+| POST | /login | const {email, password } = req.body; | res.status(200).json({ authToken }); | Verifica crendeciales y si son validas devuelve el JWT al cliente |
 | GET |  /verify | none | res.status(200).json(req.payload); | Autentifica si el JWT es valido |
 ---
