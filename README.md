@@ -1,7 +1,7 @@
 # Portfolio - server side
 
-El server hace la función de la API para el Front-End que puedes encontrar aquí [here](https://github.com/eoGimenez/portfolio-client)
-También puede encontrar el servidor de la API en el framework FastAPI [here](https://github.com/eoGimenez/portfolio-back-fastAPI.git)
+- El server hace la función de la API para el Front-End que puedes encontrar aquí [here](https://github.com/eoGimenez/portfolio-client)
+- También puede encontrar el servidor de la API en el framework FastAPI [here](https://github.com/eoGimenez/portfolio-back-fastAPI.git)
 
 ## About
 
